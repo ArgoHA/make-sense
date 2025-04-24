@@ -166,18 +166,32 @@ class Editor extends React.Component<IProps, IState> {
         EditorActions.fullRender();
     };
 
+    // private handleZoom = (event: WheelEvent) => {
+    //     if (event.ctrlKey || (PlatformModel.isMac && event.metaKey)) {
+    //         const scrollSign: number = Math.sign(event.deltaY);
+    //         if ((PlatformModel.isMac && scrollSign === -1) || (!PlatformModel.isMac && scrollSign === 1)) {
+    //             ViewPortActions.zoomOut();
+    //         }
+    //         else if ((PlatformModel.isMac && scrollSign === 1) || (!PlatformModel.isMac && scrollSign === -1)) {
+    //             ViewPortActions.zoomIn();
+    //         }
+    //     }
+    //     EditorModel.mousePositionOnViewPortContent = CanvasUtil.getMousePositionOnCanvasFromEvent(event, EditorModel.canvas);
+    // };
+
     private handleZoom = (event: WheelEvent) => {
+        // Zoom only when ctrl (Windows/Linux) or meta (Mac) is held
         if (event.ctrlKey || (PlatformModel.isMac && event.metaKey)) {
-            const scrollSign: number = Math.sign(event.deltaY);
-            if ((PlatformModel.isMac && scrollSign === -1) || (!PlatformModel.isMac && scrollSign === 1)) {
-                ViewPortActions.zoomOut();
-            }
-            else if ((PlatformModel.isMac && scrollSign === 1) || (!PlatformModel.isMac && scrollSign === -1)) {
-                ViewPortActions.zoomIn();
+            const scrollSign = Math.sign(event.deltaY);
+            if (scrollSign > 0) {
+                ViewPortActions.zoomOut();  // Scrolling down or pinching in
+            } else if (scrollSign < 0) {
+                ViewPortActions.zoomIn();   // Scrolling up or pinching out
             }
         }
         EditorModel.mousePositionOnViewPortContent = CanvasUtil.getMousePositionOnCanvasFromEvent(event, EditorModel.canvas);
     };
+
 
     private getOptionsPanels = () => {
         const editorData: EditorData = EditorActions.getEditorData();
