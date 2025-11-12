@@ -23,7 +23,7 @@ You can find out more about our tool from the newly released [documentation][14]
 [makesense.ai][1] strives to significantly reduce the time you have to spend on photo labeling. We are doing our best to integrate the latest and greatest AI models, that can give you recommendations as well as automate repetitive and tedious activities.
 
 * [YOLOv5][16] is our most powerful integration yet. Thanks to the use of [yolov5js][17] you can load not only pretrained models from [yolov5js-zoo](18), but above all your own models trained thanks to YOLOv5 and [exported](19) to tfjs format.
-* [SSD][8] pretrained on the [COCO dataset][9], which will do some of the work for you in drawing bounding boxes on photos and also (in some cases) suggest a label. 
+* [SSD][8] pretrained on the [COCO dataset][9], which will do some of the work for you in drawing bounding boxes on photos and also (in some cases) suggest a label.
 * [PoseNet][11] is a vision model that can be used to estimate the pose of a person in an image or video by estimating where key body joints are.
 
 The engine that drives our AI functionalities is [TensorFlow.js][10] - JS version of the most popular framework for training neural networks. This choice allows us not only to speed up your work but also to care about the privacy of your data, because unlike with other commercial and open-source tools, your photos do not have to be transferred to the server. This time AI comes to your device!
@@ -86,13 +86,13 @@ docker logs make-sense
 | **Point**     | ✓   | ✗    | ☐       | ☐        | ☐         | ✗          |
 | **Line**      | ✓   | ✗    | ✗       | ✗        | ✗         | ✗          |
 | **Rect**      | ✓   | ✓    | ✓       | ☐        | ☐         | ✗          |
-| **Polygon**   | ☐   | ✗    | ☐       | ✓        | ✓         | ☐          |
+| **Polygon**   | ☐   | ✓    | ☐       | ✓        | ✓         | ☐          |
 | **Label**     | ✓   | ✗    | ✗       | ✗        | ✗         | ✗          |
 
 **Table 2.** The matrix of supported labels export formats, where:
 * ✓ - supported format
 * ☐ - not yet supported format
-* ✗ - format does not make sense for a given label type  
+* ✗ - format does not make sense for a given label type
 
 You can find examples of export files along with a description and schema on our [Wiki][7].
 
@@ -103,13 +103,13 @@ You can find examples of export files along with a description and schema on our
 | **Point**     | ☐   | ✗    | ☐       | ☐        | ☐         | ✗          |
 | **Line**      | ☐   | ✗    | ✗       | ✗        | ✗         | ✗          |
 | **Rect**      | ☐   | ✓    | ✓       | ☐        | ✓         | ✗          |
-| **Polygon**   | ☐   | ✗    | ☐       | ☐        | ✓         | ☐          |
+| **Polygon**   | ☐   | ✓    | ☐       | ☐        | ✓         | ☐          |
 | **Label**     | ☐   | ✗    | ✗       | ✗        | ✗         | ✗          |
 
 **Table 3.** The matrix of supported labels import formats
 * ✓ - supported format
 * ☐ - not yet supported format
-* ✗ - format does not make sense for a given label type  
+* ✗ - format does not make sense for a given label type
 
 ## 🔐 Privacy
 
@@ -122,7 +122,7 @@ If you are just starting your adventure with deep learning and would like to lea
 
 ## 🏆 Contribution
 
-<p align="center"> 
+<p align="center">
     <a href="https://github.com/SkalskiP/make-sense/graphs/contributors">
       <img src="https://contrib.rocks/image?repo=SkalskiP/make-sense" />
     </a>
@@ -161,6 +161,6 @@ This project is licensed under the GPL-3.0 License - see the [LICENSE][2] file f
 [14]: https://skalskip.github.io/make-sense/
 [15]: https://github.com/SkalskiP/make-sense/issues
 [16]: https://github.com/ultralytics/yolov5
-[17]: https://github.com/SkalskiP/yolov5js 
+[17]: https://github.com/SkalskiP/yolov5js
 [18]: https://github.com/SkalskiP/yolov5js-zoo
 [19]: https://github.com/ultralytics/yolov5/blob/master/export.py
