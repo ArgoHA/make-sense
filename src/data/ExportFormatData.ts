@@ -39,6 +39,10 @@ export const ExportFormatData: ExportFormatDataMap = {
         {
             type: AnnotationFormatType.COCO,
             label: 'Single file in COCO JSON format.'
+        },
+        {
+            type: AnnotationFormatType.YOLO_POLYGON,
+            label: 'A .zip package containing files in YOLO polygon format.'
         }
     ],
     [LabelType.IMAGE_RECOGNITION]: [
