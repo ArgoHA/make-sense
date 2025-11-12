@@ -11,11 +11,15 @@ export class FileUtil {
 
     public static loadImage(fileData: File): Promise<HTMLImageElement> {
         return new Promise((resolve, reject) => {
-            const url = URL.createObjectURL(fileData);
-            const image = new Image();
-            image.src = url;
-            image.onload = () => resolve(image);
-            image.onerror = reject;
+            const reader = new FileReader();
+            reader.onload = (e: ProgressEvent<FileReader>) => {
+                const image = new Image();
+                image.onload = () => resolve(image);
+                image.onerror = reject;
+                image.src = e.target.result as string;
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(fileData);
         });
     }
 
