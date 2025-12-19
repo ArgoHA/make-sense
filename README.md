@@ -59,7 +59,11 @@ docker run -dit -p 3000:3000 --restart=always --name=make-sense make-sense
 # Get Docker Container Logs
 docker logs make-sense
 
+# Stop
+docker rm make-sense -f
+
 # Access make-sense: http://localhost:3000/
+
 ```
 
 ## ⌨️ Keyboard Shortcuts
