@@ -15,7 +15,7 @@ import ExportLabelPopup from './ExportLabelsPopup/ExportLabelPopup';
 import LoadModelPopup from './LoadModelPopup/LoadModelPopup';
 import LoadYOLOv5ModelPopup from './LoadYOLOv5ModelPopup/LoadYOLOv5ModelPopup';
 import ConnectInferenceServerPopup from './ConnectInferenceServerPopup/ConnectInferenceServerPopup';
-import RestoreSessionPopup from './RestoreSessionPopup/RestoreSessionPopup';
+import ReconnectFolderPopup from './ReconnectFolderPopup/ReconnectFolderPopup';
 
 interface IProps {
     activePopupType: PopupWindowType;
@@ -41,8 +41,8 @@ const PopupView: React.FC<IProps> = ({ activePopupType }) => {
                 />;
             case PopupWindowType.EXIT_PROJECT:
                 return <ExitProjectPopup />;
-            case PopupWindowType.RESTORE_SESSION:
-                return <RestoreSessionPopup />;
+            case PopupWindowType.RECONNECT_FOLDER:
+                return <ReconnectFolderPopup />;
             case PopupWindowType.IMPORT_IMAGES:
                 return <LoadMoreImagesPopup />;
             case PopupWindowType.LOAD_AI_MODEL:

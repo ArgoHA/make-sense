@@ -57,5 +57,49 @@ export const NotificationsDataMap: ExportFormatDataMap = {
         header: 'Roboflow connection failed',
         description: 'Looks like we ware unable to connect to your Roboflow model. Please, make sure that the model ' +
             'specification and Roboflow API key, are correct.'
+    },
+    [Notification.FILE_SYSTEM_API_UNSUPPORTED]: {
+        header: 'Browser does not support folder access',
+        description: 'Connecting a folder requires the File System Access API, which is available in Chrome and ' +
+            'Edge over HTTPS or localhost. Drag and drop still works in every browser.'
+    },
+    [Notification.FOLDER_EMPTY_ERROR]: {
+        header: 'Folder contains no images',
+        description: 'We did not find any jpg, jpeg or png files in the selected folder. Pick a folder containing ' +
+            'your dataset images and try again.'
+    },
+    [Notification.FOLDER_PERMISSION_DENIED]: {
+        header: 'Folder access denied',
+        description: 'Make Sense was not granted read and write access to the folder, so images cannot be loaded ' +
+            'and annotations cannot be saved. Try again and accept the permission prompt.'
+    },
+    [Notification.FOLDER_AUTOSAVE_PAUSED]: {
+        header: 'Folder autosave paused',
+        description: 'We lost write access to the connected folder, so annotations are no longer saved to disk. ' +
+            'Your work is still in memory - reconnect the folder or toggle autosave to resume saving.'
+    },
+    [Notification.FOLDER_LOAD_ERROR]: {
+        header: 'Folder could not be loaded',
+        description: 'Something went wrong while reading the selected folder. Make sure the folder still exists ' +
+            'and is accessible, then try again.'
+    },
+    [Notification.FILENAME_COPIED]: {
+        header: 'File name copied',
+        description: 'The name of the current image was copied to your clipboard.'
+    },
+    [Notification.FILENAME_COPY_ERROR]: {
+        header: 'Copy failed',
+        description: 'We could not copy the image name to your clipboard. Please copy it manually from the ' +
+            'bottom bar.'
+    },
+    [Notification.IMAGE_DELETE_ERROR]: {
+        header: 'Image could not be deleted',
+        description: 'Something went wrong while moving the image to the .trash subfolder. The image was left in ' +
+            'place - check folder permissions and try again.'
+    },
+    [Notification.FOLDER_BASENAME_COLLISION]: {
+        header: 'Duplicate image names found',
+        description: 'Some images in this folder share the same base name (for example a.jpg and a.png). Their ' +
+            'label files in the labels subfolder will overwrite each other. Consider renaming the images.'
     }
 }

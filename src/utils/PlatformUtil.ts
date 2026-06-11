@@ -22,4 +22,8 @@ export class PlatformUtil {
     public static isFirefox(userAgent: string): boolean {
         return !!userAgent.toLowerCase().match("firefox");
     }
+
+    public static supportsFileSystemAccessAPI(): boolean {
+        return typeof window !== 'undefined' && 'showDirectoryPicker' in window && window.isSecureContext;
+    }
 }

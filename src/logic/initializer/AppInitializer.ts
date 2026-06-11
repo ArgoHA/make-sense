@@ -8,9 +8,10 @@ import {GeneralSelector} from '../../store/selectors/GeneralSelector';
 import {EnvironmentUtil} from '../../utils/EnvironmentUtil';
 import {updateActivePopupType} from '../../store/general/actionCreators';
 import {PopupWindowType} from '../../data/enums/PopupWindowType';
-import {AutoSaveEngine} from '../autosave/AutoSaveEngine';
-import {AutoSaveStorage} from '../autosave/AutoSaveStorage';
-import {autoSaveSnapshotHasAnnotations, AutoSaveSnapshot} from '../autosave/AutoSaveTypes';
+import {FileSystemHandleStorage, FolderConnectionRecord} from '../fileSystem/FileSystemHandleStorage';
+import {FileSystemRepository} from '../imageRepository/FileSystemRepository';
+import {FolderAutoSaveEngine} from '../fileSystem/FolderAutoSaveEngine';
+import {FolderProjectActions} from '../fileSystem/FolderProjectActions';
 
 export class AppInitializer {
     public static inti():void {
@@ -22,32 +23,40 @@ export class AppInitializer {
         window.addEventListener(EventType.KEY_DOWN, AppInitializer.disableUnwantedKeyBoardBehaviour);
         window.addEventListener(EventType.KEY_PRESS, AppInitializer.disableUnwantedKeyBoardBehaviour);
         ContextManager.init();
-        AutoSaveEngine.init();
-        AppInitializer.offerSessionRestore();
+        AppInitializer.offerFolderReconnect();
     }
 
-    private static offerSessionRestore = () => {
-        if (!AutoSaveEngine.isEnabled()) return;
-        AutoSaveStorage.load()
-            .then((snapshot: AutoSaveSnapshot | null) => {
-                // Only prompt when there is real annotation work to recover and the
-                // user has not already loaded a project in this session.
-                if (snapshot
-                    && autoSaveSnapshotHasAnnotations(snapshot)
-                    && GeneralSelector.getProjectType() == null) {
-                    AutoSaveEngine.setPendingRestore(snapshot);
-                    store.dispatch(updateActivePopupType(PopupWindowType.RESTORE_SESSION));
+    private static offerFolderReconnect = () => {
+        if (!PlatformModel.supportsFileSystemAccessAPI) return;
+        FileSystemHandleStorage.load()
+            .then(async (record: FolderConnectionRecord | null) => {
+                // Only prompt when a folder was connected before and the user
+                // has not already loaded a project in this session.
+                if (!record || !record.handle) return;
+                if (GeneralSelector.getProjectType() != null) return;
+                try {
+                    const permission: PermissionState = await record.handle.queryPermission({mode: 'readwrite'});
+                    if (permission === 'denied') {
+                        FileSystemHandleStorage.clear().catch(() => undefined);
+                        return;
+                    }
+                    FolderProjectActions.pendingReconnectHandle = record.handle;
+                    store.dispatch(updateActivePopupType(PopupWindowType.RECONNECT_FOLDER));
+                } catch {
+                    FileSystemHandleStorage.clear().catch(() => undefined);
                 }
             })
             .catch(() => {
-                // ignore - autosave is a best-effort safety net
+                // ignore - reconnect is a best-effort convenience
             });
     };
 
     private static handleAccidentalPageExit = () => {
         window.onbeforeunload = (event) => {
             const projectType = GeneralSelector.getProjectType();
-            if (projectType != null && EnvironmentUtil.isProd()) {
+            // With folder autosave on, the work is already on disk - no need to nag.
+            const folderAutoSaveActive = FileSystemRepository.isConnected() && FolderAutoSaveEngine.isEnabled();
+            if (projectType != null && !folderAutoSaveActive && EnvironmentUtil.isProd()) {
                 event.preventDefault();
                 event.returnValue = '';
             }
@@ -81,5 +90,6 @@ export class AppInitializer {
         PlatformModel.isMac = PlatformUtil.isMac(userAgent);
         PlatformModel.isSafari = PlatformUtil.isSafari(userAgent);
         PlatformModel.isFirefox = PlatformUtil.isFirefox(userAgent);
+        PlatformModel.supportsFileSystemAccessAPI = PlatformUtil.supportsFileSystemAccessAPI();
     };
 }

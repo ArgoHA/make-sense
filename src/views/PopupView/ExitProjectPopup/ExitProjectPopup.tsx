@@ -14,7 +14,8 @@ import { ImageData, LabelName } from "../../../store/labels/types";
 import { PopupActions } from "../../../logic/actions/PopupActions";
 import { ProjectData } from "../../../store/general/types";
 import { updateProjectData as storeUpdateProjectData } from "../../../store/general/actionCreators";
-import { AutoSaveEngine } from "../../../logic/autosave/AutoSaveEngine";
+import { FolderAutoSaveEngine } from "../../../logic/fileSystem/FolderAutoSaveEngine";
+import { FileSystemRepository } from "../../../logic/imageRepository/FileSystemRepository";
 
 interface IProps {
     updateActiveImageIndex: (activeImageIndex: number) => any;
@@ -46,9 +47,10 @@ const ExitProjectPopup: React.FC<IProps> = ({
     };
 
     const onAccept = () => {
-        // Leaving the project is deliberate, so drop the autosave snapshot to
-        // avoid prompting to restore an abandoned session on the next visit.
-        AutoSaveEngine.clear();
+        // Disconnect the folder, but keep the persisted handle so reconnect
+        // can still be offered on the next visit.
+        FolderAutoSaveEngine.detach();
+        FileSystemRepository.reset();
         updateActiveLabelNameId(null);
         updateLabelNames([]);
         updateProjectData({ type: null, name: "my-project-name" });

@@ -1,7 +1,8 @@
 import { ContextType } from '../../../data/enums/ContextType';
 import './EditorTopNavigationBar.scss';
 import React from 'react';
-import { AutoSaveEngine } from '../../../logic/autosave/AutoSaveEngine';
+import { FolderAutoSaveEngine } from '../../../logic/fileSystem/FolderAutoSaveEngine';
+import { FileSystemRepository } from '../../../logic/imageRepository/FileSystemRepository';
 import classNames from 'classnames';
 import { AppState } from '../../../store';
 import { connect } from 'react-redux';
@@ -81,12 +82,13 @@ const EditorTopNavigationBar: React.FC<IProps> = (
         crossHairVisible,
         activeLabelType
     }) => {
-    const [autoSaveEnabled, setAutoSaveEnabled] = React.useState<boolean>(AutoSaveEngine.isEnabled());
+    const [folderAutoSaveEnabled, setFolderAutoSaveEnabled] = React.useState<boolean>(FolderAutoSaveEngine.isEnabled());
+    const folderConnected: boolean = FileSystemRepository.isConnected();
 
-    const autoSaveOnClick = () => {
-        const nextEnabled: boolean = !autoSaveEnabled;
-        AutoSaveEngine.setEnabled(nextEnabled);
-        setAutoSaveEnabled(nextEnabled);
+    const folderAutoSaveOnClick = () => {
+        const nextEnabled: boolean = !folderAutoSaveEnabled;
+        FolderAutoSaveEngine.setEnabled(nextEnabled);
+        setFolderAutoSaveEnabled(nextEnabled);
     };
 
     const getClassName = () => {
@@ -190,16 +192,16 @@ const EditorTopNavigationBar: React.FC<IProps> = (
                     )
                 }
                 {
-                    getButtonWithTooltip(
-                        'autosave',
-                        autoSaveEnabled
-                            ? 'autosave is ON - your annotations are kept in this browser and offered for restore if the page closes (click to turn off)'
-                            : 'autosave is OFF - your work will be lost if you leave the page (click to turn on)',
+                    folderConnected && getButtonWithTooltip(
+                        'folder-autosave',
+                        folderAutoSaveEnabled
+                            ? `autosave to "${FileSystemRepository.getFolderName()}" is ON - YOLO label files are written into the folder as you annotate (click to turn off)`
+                            : 'folder autosave is OFF - annotations stay in memory only (click to turn on)',
                         'ico/refresh.png',
-                        'autosave',
-                        autoSaveEnabled,
+                        'folder-autosave',
+                        folderAutoSaveEnabled,
                         undefined,
-                        autoSaveOnClick
+                        folderAutoSaveOnClick
                     )
                 }
             </div>

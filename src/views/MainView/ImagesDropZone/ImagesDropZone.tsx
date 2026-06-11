@@ -11,6 +11,7 @@ import {PopupWindowType} from '../../../data/enums/PopupWindowType';
 import {updateActivePopupType, updateProjectData} from '../../../store/general/actionCreators';
 import {ProjectData} from '../../../store/general/types';
 import {ImageDataUtil} from '../../../utils/ImageDataUtil';
+import {FolderProjectActions} from '../../../logic/fileSystem/FolderProjectActions';
 import { sortBy } from 'lodash';
 
 interface IProps {
@@ -79,6 +80,8 @@ const ImagesDropZone: React.FC<IProps> = (props: PropsWithChildren<IProps>) => {
 
     const startEditorWithObjectDetection = () => startEditor(ProjectType.OBJECT_DETECTION)
     const startEditorWithImageRecognition = () => startEditor(ProjectType.IMAGE_RECOGNITION)
+    // Unsupported browsers get an explanatory notification on click.
+    const startEditorWithFolder = () => FolderProjectActions.openFolder()
 
     return(
         <div className='ImagesDropZone'>
@@ -95,6 +98,10 @@ const ImagesDropZone: React.FC<IProps> = (props: PropsWithChildren<IProps>) => {
                     label={'Image recognition'}
                     isDisabled={!acceptedFiles.length}
                     onClick={startEditorWithImageRecognition}
+                />
+                <TextButton
+                    label={'Open folder'}
+                    onClick={startEditorWithFolder}
                 />
             </div>
         </div>

@@ -8,6 +8,14 @@ import {ISize} from "../../../interfaces/ISize";
 import {ContextType} from "../../../data/enums/ContextType";
 import classNames from "classnames";
 import {ImageActions} from "../../../logic/actions/ImageActions";
+import {INotification} from "../../../store/notifications/types";
+import {submitNewNotification} from "../../../store/notifications/actionCreators";
+import {NotificationUtil} from "../../../utils/NotificationUtil";
+import {NotificationsDataMap} from "../../../data/info/NotificationsData";
+import {Notification} from "../../../data/enums/Notification";
+import {ClipboardUtil} from "../../../utils/ClipboardUtil";
+import {FileSystemRepository} from "../../../logic/imageRepository/FileSystemRepository";
+import {FolderProjectActions} from "../../../logic/fileSystem/FolderProjectActions";
 
 interface IProps {
     size: ISize;
@@ -15,9 +23,12 @@ interface IProps {
     totalImageCount: number;
     activeImageIndex: number;
     activeContext: ContextType;
+    submitNewNotificationAction: (notification: INotification) => any;
 }
 
-const EditorBottomNavigationBar: React.FC<IProps> = ({size, imageData, totalImageCount, activeImageIndex, activeContext}) => {
+const EditorBottomNavigationBar: React.FC<IProps> = (
+    {size, imageData, totalImageCount, activeImageIndex, activeContext, submitNewNotificationAction}
+) => {
     const minWidth:number = 400;
 
     const getImageCounter = () => {
@@ -31,6 +42,14 @@ const EditorBottomNavigationBar: React.FC<IProps> = ({size, imageData, totalImag
                 "with-context": activeContext === ContextType.EDITOR
             }
         );
+    };
+
+    const copyImageNameOnClick = () => {
+        ClipboardUtil.copyText(imageData.fileData.name)
+            .then(() => submitNewNotificationAction(NotificationUtil.createMessageNotification(
+                NotificationsDataMap[Notification.FILENAME_COPIED])))
+            .catch(() => submitNewNotificationAction(NotificationUtil.createErrorNotification(
+                NotificationsDataMap[Notification.FILENAME_COPY_ERROR])));
     };
 
     return (
@@ -48,6 +67,18 @@ const EditorBottomNavigationBar: React.FC<IProps> = ({size, imageData, totalImag
                 <div className="CurrentImageCount"> {getImageCounter()} </div>
             }
             <ImageButton
+                image={"ico/file.png"}
+                imageAlt={"copy file name"}
+                buttonSize={{width: 25, height: 25}}
+                onClick={copyImageNameOnClick}
+            />
+            {FileSystemRepository.isConnected() && <ImageButton
+                image={"ico/trash.png"}
+                imageAlt={"move image to trash"}
+                buttonSize={{width: 25, height: 25}}
+                onClick={() => FolderProjectActions.deleteActiveImage()}
+            />}
+            <ImageButton
                 image={"ico/right.png"}
                 imageAlt={"next"}
                 buttonSize={{width: 25, height: 25}}
@@ -59,7 +90,9 @@ const EditorBottomNavigationBar: React.FC<IProps> = ({size, imageData, totalImag
     );
 };
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+    submitNewNotificationAction: submitNewNotification
+};
 
 const mapStateToProps = (state: AppState) => ({
     activeImageIndex: state.labels.activeImageIndex,
