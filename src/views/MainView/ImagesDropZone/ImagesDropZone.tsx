@@ -99,6 +99,8 @@ const ImagesDropZone: React.FC<IProps> = (props: PropsWithChildren<IProps>) => {
                     isDisabled={!acceptedFiles.length}
                     onClick={startEditorWithImageRecognition}
                 />
+            </div>
+            <div className='DropZoneFolderButton'>
                 <TextButton
                     label={'Open folder'}
                     onClick={startEditorWithFolder}
