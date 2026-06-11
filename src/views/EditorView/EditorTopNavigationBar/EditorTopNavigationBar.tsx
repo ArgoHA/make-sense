@@ -14,6 +14,7 @@ import { LabelType } from '../../../data/enums/LabelType';
 import { AISelector } from '../../../store/selectors/AISelector';
 import { ISize } from '../../../interfaces/ISize';
 import { AIActions } from '../../../logic/actions/AIActions';
+import { AutoSaveEngine } from '../../../logic/autosave/AutoSaveEngine';
 import { Fade, styled, Tooltip, tooltipClasses, TooltipProps } from '@mui/material';
 const BUTTON_SIZE: ISize = { width: 30, height: 30 };
 const BUTTON_PADDING: number = 10;
@@ -80,6 +81,14 @@ const EditorTopNavigationBar: React.FC<IProps> = (
         crossHairVisible,
         activeLabelType
     }) => {
+    const [autoSaveEnabled, setAutoSaveEnabled] = React.useState<boolean>(AutoSaveEngine.isEnabled());
+
+    const autoSaveOnClick = () => {
+        const nextEnabled: boolean = !autoSaveEnabled;
+        AutoSaveEngine.setEnabled(nextEnabled);
+        setAutoSaveEnabled(nextEnabled);
+    };
+
     const getClassName = () => {
         return classNames(
             'EditorTopNavigationBar',
@@ -178,6 +187,19 @@ const EditorTopNavigationBar: React.FC<IProps> = (
                         crossHairVisible,
                         undefined,
                         crossHairOnClick
+                    )
+                }
+                {
+                    getButtonWithTooltip(
+                        'autosave',
+                        autoSaveEnabled
+                            ? 'autosave is ON - a YOLO export (labels_autosave.zip) is downloaded as you annotate (click to turn off)'
+                            : 'autosave is OFF - your work is only kept in memory (click to turn on)',
+                        'ico/download.png',
+                        'autosave',
+                        autoSaveEnabled,
+                        undefined,
+                        autoSaveOnClick
                     )
                 }
             </div>
