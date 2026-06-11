@@ -6,6 +6,11 @@ import {PlatformModel} from '../../staticModels/PlatformModel';
 import {EventType} from '../../data/enums/EventType';
 import {GeneralSelector} from '../../store/selectors/GeneralSelector';
 import {EnvironmentUtil} from '../../utils/EnvironmentUtil';
+import {updateActivePopupType} from '../../store/general/actionCreators';
+import {PopupWindowType} from '../../data/enums/PopupWindowType';
+import {AutoSaveEngine} from '../autosave/AutoSaveEngine';
+import {AutoSaveStorage} from '../autosave/AutoSaveStorage';
+import {autoSaveSnapshotHasAnnotations, AutoSaveSnapshot} from '../autosave/AutoSaveTypes';
 
 export class AppInitializer {
     public static inti():void {
@@ -17,7 +22,27 @@ export class AppInitializer {
         window.addEventListener(EventType.KEY_DOWN, AppInitializer.disableUnwantedKeyBoardBehaviour);
         window.addEventListener(EventType.KEY_PRESS, AppInitializer.disableUnwantedKeyBoardBehaviour);
         ContextManager.init();
+        AutoSaveEngine.init();
+        AppInitializer.offerSessionRestore();
     }
+
+    private static offerSessionRestore = () => {
+        if (!AutoSaveEngine.isEnabled()) return;
+        AutoSaveStorage.load()
+            .then((snapshot: AutoSaveSnapshot | null) => {
+                // Only prompt when there is real annotation work to recover and the
+                // user has not already loaded a project in this session.
+                if (snapshot
+                    && autoSaveSnapshotHasAnnotations(snapshot)
+                    && GeneralSelector.getProjectType() == null) {
+                    AutoSaveEngine.setPendingRestore(snapshot);
+                    store.dispatch(updateActivePopupType(PopupWindowType.RESTORE_SESSION));
+                }
+            })
+            .catch(() => {
+                // ignore - autosave is a best-effort safety net
+            });
+    };
 
     private static handleAccidentalPageExit = () => {
         window.onbeforeunload = (event) => {

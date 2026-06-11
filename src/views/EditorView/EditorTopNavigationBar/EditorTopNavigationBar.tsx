@@ -1,6 +1,7 @@
 import { ContextType } from '../../../data/enums/ContextType';
 import './EditorTopNavigationBar.scss';
 import React from 'react';
+import { AutoSaveEngine } from '../../../logic/autosave/AutoSaveEngine';
 import classNames from 'classnames';
 import { AppState } from '../../../store';
 import { connect } from 'react-redux';
@@ -80,6 +81,14 @@ const EditorTopNavigationBar: React.FC<IProps> = (
         crossHairVisible,
         activeLabelType
     }) => {
+    const [autoSaveEnabled, setAutoSaveEnabled] = React.useState<boolean>(AutoSaveEngine.isEnabled());
+
+    const autoSaveOnClick = () => {
+        const nextEnabled: boolean = !autoSaveEnabled;
+        AutoSaveEngine.setEnabled(nextEnabled);
+        setAutoSaveEnabled(nextEnabled);
+    };
+
     const getClassName = () => {
         return classNames(
             'EditorTopNavigationBar',
@@ -178,6 +187,19 @@ const EditorTopNavigationBar: React.FC<IProps> = (
                         crossHairVisible,
                         undefined,
                         crossHairOnClick
+                    )
+                }
+                {
+                    getButtonWithTooltip(
+                        'autosave',
+                        autoSaveEnabled
+                            ? 'autosave is ON - your annotations are kept in this browser and offered for restore if the page closes (click to turn off)'
+                            : 'autosave is OFF - your work will be lost if you leave the page (click to turn on)',
+                        'ico/refresh.png',
+                        'autosave',
+                        autoSaveEnabled,
+                        undefined,
+                        autoSaveOnClick
                     )
                 }
             </div>
