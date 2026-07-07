@@ -57,5 +57,14 @@ export const NotificationsDataMap: ExportFormatDataMap = {
         header: 'Roboflow connection failed',
         description: 'Looks like we ware unable to connect to your Roboflow model. Please, make sure that the model ' +
             'specification and Roboflow API key, are correct.'
+    },
+    [Notification.FILENAME_COPIED]: {
+        header: 'File name copied',
+        description: 'The name of the current image was copied to your clipboard.'
+    },
+    [Notification.FILENAME_COPY_ERROR]: {
+        header: 'Copy failed',
+        description: 'We could not copy the image name to your clipboard. Please copy it manually from the ' +
+            'bottom bar.'
     }
 }
