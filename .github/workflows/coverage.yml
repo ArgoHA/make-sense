@@ -20,6 +20,12 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      # Node 14/16 ship npm 6/8; pin an npm that reads the v2 lockfile and
+      # skips esbuild's platform-specific optional deps. (Latest npm requires
+      # Node >=20, so it must not be left unpinned here.)
+      - name: Update NPM
+        run: npm i -g npm@8
+
       - name: Install dependencies
         run: npm install
 
