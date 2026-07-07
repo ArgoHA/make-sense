@@ -58,13 +58,13 @@ describe('YOLOUtils parseLabelsFile method', () => {
     });
 });
 
-describe('YOLOUtils validateYOLOAnnotationComponents method', () => {
+describe('YOLOUtils validateYOLOBboxComponents method', () => {
     it('should return false when incorrect number of components given', () => {
         // given
         const components: string[] = ['2', '0.342238', '0.054099', '0.069556'];
 
         // when
-        const result = YOLOUtils.validateYOLOAnnotationComponents(components, 3);
+        const result = YOLOUtils.validateYOLOBboxComponents(components, 3);
 
         // then
         expect(result).toBe(false);
@@ -75,7 +75,7 @@ describe('YOLOUtils validateYOLOAnnotationComponents method', () => {
         const components: string[] = ['2', '0.342238', '0.054099', '0.069556', '0.108199'];
 
         // when
-        const result = YOLOUtils.validateYOLOAnnotationComponents(components, 1);
+        const result = YOLOUtils.validateYOLOBboxComponents(components, 1);
 
         // then
         expect(result).toBe(false);
@@ -86,7 +86,7 @@ describe('YOLOUtils validateYOLOAnnotationComponents method', () => {
         const components: string[] = ['2', '0.342238', '1.054099', '0.069556', '0.108199'];
 
         // when
-        const result = YOLOUtils.validateYOLOAnnotationComponents(components, 3);
+        const result = YOLOUtils.validateYOLOBboxComponents(components, 3);
 
         // then
         expect(result).toBe(false);
@@ -97,7 +97,7 @@ describe('YOLOUtils validateYOLOAnnotationComponents method', () => {
         const components: string[] = ['2', '0.342238', '-0.054099', '0.069556', '0.108199'];
 
         // when
-        const result = YOLOUtils.validateYOLOAnnotationComponents(components, 3);
+        const result = YOLOUtils.validateYOLOBboxComponents(components, 3);
 
         // then
         expect(result).toBe(false);
@@ -108,7 +108,7 @@ describe('YOLOUtils validateYOLOAnnotationComponents method', () => {
         const components: string[] = ['2', '0.342238', '0.054099', '0.069556', '0.108199'];
 
         // when
-        const result = YOLOUtils.validateYOLOAnnotationComponents(components, 3);
+        const result = YOLOUtils.validateYOLOBboxComponents(components, 3);
 
         // then
         expect(result).toBe(true);
@@ -119,7 +119,7 @@ describe('YOLOUtils validateYOLOAnnotationComponents method', () => {
         const components: string[] = ['6', '0.557911', '0.924187', '0.000673', '0.000000'];
 
         // when
-        const result = YOLOUtils.validateYOLOAnnotationComponents(components, 10);
+        const result = YOLOUtils.validateYOLOBboxComponents(components, 10);
 
         // then
         expect(result).toBe(true);
