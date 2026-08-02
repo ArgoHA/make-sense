@@ -66,5 +66,10 @@ export const NotificationsDataMap: ExportFormatDataMap = {
         header: 'Copy failed',
         description: 'We could not copy the image name to your clipboard. Please copy it manually from the ' +
             'bottom bar.'
+    },
+    [Notification.MASK_SIZE_MISMATCH_ERROR]: {
+        header: 'Mask size does not match image',
+        description: 'One of the imported PNG masks has different dimensions than the image it belongs to. ' +
+            'Semantic segmentation masks must have exactly the same width and height as their images.'
     }
 }

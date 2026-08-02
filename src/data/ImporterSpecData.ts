@@ -4,6 +4,7 @@ import {COCOImporter} from '../logic/import/coco/COCOImporter';
 import {YOLOImporter} from '../logic/import/yolo/YOLOImporter';
 import {VOCImporter} from '../logic/import/voc/VOCImporter';
 import {YOLOPolygonImporter} from '../logic/import/yolo/YOLOPolygonImporter';
+import {PNGMaskImporter} from '../logic/import/pngMask/PNGMaskImporter';
 
 export type ImporterSpecDataMap = Record<AnnotationFormatType, typeof AnnotationImporter>;
 
@@ -16,4 +17,5 @@ export const ImporterSpecData: ImporterSpecDataMap = {
     [AnnotationFormatType.VOC]: VOCImporter,
     [AnnotationFormatType.YOLO]: YOLOImporter,
     [AnnotationFormatType.YOLO_POLYGON]: YOLOPolygonImporter,
+    [AnnotationFormatType.PNG_MASK]: PNGMaskImporter,
 }

@@ -33,6 +33,14 @@ export type LabelLine = Annotation & {
     line: ILine;
 }
 
+// Per-image semantic segmentation mask. Pixel data lives outside redux in MaskRepository,
+// keyed by this object's id. Pixel values are class indices into the labels list, 255 = ignore.
+export type LabelMask = {
+    id: string;
+    isVisible: boolean;
+    classIndices: number[];
+}
+
 export type LabelName = {
     name: string;
     id: string;
@@ -48,6 +56,7 @@ export type ImageData = {
     labelLines: LabelLine[];
     labelPolygons: LabelPolygon[];
     labelNameIds: string[];
+    labelMask: LabelMask | null;
 
     // YOLO
     isVisitedByYOLOObjectDetector: boolean;

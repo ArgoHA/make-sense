@@ -73,6 +73,8 @@ class ImagesList extends React.Component<IProps, IState> {
                 return imageData.labelRects
                     .filter((labelRect: LabelRect) => labelRect.status === LabelStatus.ACCEPTED)
                     .length > 0
+            case LabelType.SEMANTIC_SEGMENTATION:
+                return !!imageData.labelMask
         }
     };
 

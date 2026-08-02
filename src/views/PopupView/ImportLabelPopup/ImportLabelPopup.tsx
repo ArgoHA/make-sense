@@ -19,6 +19,7 @@ import { NotificationsDataMap } from '../../../data/info/NotificationsData';
 import { DocumentParsingError } from '../../../logic/import/voc/VOCImporter';
 import { Notification } from '../../../data/enums/Notification';
 import {LabelNamesNotUniqueError} from '../../../logic/import/yolo/YOLOErrors';
+import {MaskSizeMismatchError} from '../../../logic/import/pngMask/PNGMaskErrors';
 
 interface IProps {
     activeLabelType: LabelType,
@@ -52,6 +53,9 @@ const ImportLabelPopup: React.FC<IProps> = (
         if (error instanceof LabelNamesNotUniqueError) {
             return Notification.NON_UNIQUE_LABEL_NAMES_ERROR
         }
+        if (error instanceof MaskSizeMismatchError) {
+            return Notification.MASK_SIZE_MISMATCH_ERROR
+        }
         return Notification.ANNOTATION_IMPORT_ASSERTION_ERROR
     }
 
@@ -82,6 +86,7 @@ const ImportLabelPopup: React.FC<IProps> = (
             "application/json": [".json" ],
             "text/plain": [".txt"],
             "application/xml": [".xml"],
+            "image/png": [".png"],
         },
         multiple: true,
         onDrop: (acceptedFiles) => {

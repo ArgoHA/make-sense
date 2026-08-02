@@ -92,6 +92,7 @@ docker rm make-sense -f
 | **Rect**      | ✓   | ✓    | ✓       | ☐        | ☐         | ✗          |
 | **Polygon**   | ☐   | ✓    | ☐       | ✓        | ✓         | ☐          |
 | **Label**     | ✓   | ✗    | ✗       | ✗        | ✗         | ✗          |
+| **Segmentation** | ✗ | ✗   | ✗       | ✗        | ✗         | ✓          |
 
 **Table 2.** The matrix of supported labels export formats, where:
 * ✓ - supported format
@@ -109,6 +110,7 @@ You can find examples of export files along with a description and schema on our
 | **Rect**      | ☐   | ✓    | ✓       | ☐        | ✓         | ✗          |
 | **Polygon**   | ☐   | ✓    | ☐       | ☐        | ✓         | ☐          |
 | **Label**     | ☐   | ✗    | ✗       | ✗        | ✗         | ✗          |
+| **Segmentation** | ✗ | ✗   | ✗       | ✗        | ✗         | ✓          |
 
 **Table 3.** The matrix of supported labels import formats
 * ✓ - supported format

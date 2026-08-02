@@ -19,6 +19,7 @@ import {ContextType} from "../../../../data/enums/ContextType";
 import {EventType} from "../../../../data/enums/EventType";
 import LineLabelsList from "../LineLabelsList/LineLabelsList";
 import TagLabelsList from "../TagLabelsList/TagLabelsList";
+import SemanticSegmentationLabelsList from "../SemanticSegmentationLabelsList/SemanticSegmentationLabelsList";
 
 interface IProps {
     activeImageIndex:number,
@@ -53,7 +54,8 @@ class LabelsToolkit extends React.Component<IProps, IState> {
                 LabelType.RECT,
                 LabelType.POINT,
                 LabelType.LINE,
-                LabelType.POLYGON
+                LabelType.POLYGON,
+                LabelType.SEMANTIC_SEGMENTATION
             ];
 
         const activeTab: LabelType = props.activeLabelType ? props.activeLabelType : this.tabs[0];
@@ -163,6 +165,13 @@ class LabelsToolkit extends React.Component<IProps, IState> {
                         imageData={imagesData[activeImageIndex]}
                     />}
                     {labelType === LabelType.IMAGE_RECOGNITION && <TagLabelsList
+                        size={{
+                            width: size.width - 20,
+                            height: activeTabContentHeight - 20
+                        }}
+                        imageData={imagesData[activeImageIndex]}
+                    />}
+                    {labelType === LabelType.SEMANTIC_SEGMENTATION && <SemanticSegmentationLabelsList
                         size={{
                             width: size.width - 20,
                             height: activeTabContentHeight - 20

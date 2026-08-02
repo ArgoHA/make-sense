@@ -54,5 +54,11 @@ export const ExportFormatData: ExportFormatDataMap = {
             type: AnnotationFormatType.JSON,
             label: 'Single JSON file.'
         }
+    ],
+    [LabelType.SEMANTIC_SEGMENTATION]: [
+        {
+            type: AnnotationFormatType.PNG_MASK,
+            label: 'A .zip package containing single-channel PNG masks (D-FINE-seg format).'
+        }
     ]
 }

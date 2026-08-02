@@ -15,6 +15,7 @@ const getDummyImageData = (fileName: string): ImageData => {
         labelLines: [],
         labelPolygons: [],
         labelNameIds: [],
+        labelMask: null,
         isVisitedByYOLOObjectDetector: false,
         isVisitedBySSDObjectDetector: false,
         isVisitedByPoseDetector: false,

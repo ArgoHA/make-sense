@@ -45,4 +45,11 @@ export const LabelToolkitData: ILabelToolkit[] = [
         imageAlt: 'polygon',
         projectType: ProjectType.OBJECT_DETECTION,
     },
+    {
+        labelType: LabelType.SEMANTIC_SEGMENTATION,
+        headerText: 'Segmentation mask',
+        imageSrc: 'ico/pixel-mask.png',
+        imageAlt: 'pixel mask',
+        projectType: ProjectType.OBJECT_DETECTION,
+    },
 ];

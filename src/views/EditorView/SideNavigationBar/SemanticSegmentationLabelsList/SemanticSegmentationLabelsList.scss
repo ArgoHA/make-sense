@@ -1,0 +1,166 @@
+@import '../../../../settings/Settings';
+
+.SemanticSegmentationLabelsList {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+
+  .EmptyLabelList {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    width: 150px;
+    color: white;
+    font-size: 16px;
+    user-select: none;
+
+    > img {
+      filter: brightness(0) invert(1);
+      max-width: 80px;
+      max-height: 80px;
+      margin-bottom: 20px;
+      user-select: none;
+    }
+
+    > p {
+      &.extraBold {
+        font-size: 16px;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .SemanticSegmentationLabelsListContent {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    flex: 1 1 auto;
+    color: white;
+
+    .BrushRow {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 14px;
+      user-select: none;
+
+      > input {
+        flex: 1 1 auto;
+        margin-left: 10px;
+        accent-color: $secondaryColor; // fallback if new css variables are not supported by browser
+        accent-color: var(--leading-color);
+      }
+    }
+
+    .HintRow {
+      font-size: 12px;
+      opacity: 0.6;
+      margin-bottom: 10px;
+      user-select: none;
+    }
+
+    .MaskRow {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 13px;
+      user-select: none;
+
+      .MaskRowLabel {
+        flex: 1 1 auto;
+        opacity: 0.8;
+      }
+
+      .ImageButton {
+        margin-left: 5px;
+        border-radius: 3px;
+        background-color: rgba(0, 0, 0, 0.2);
+
+        img {
+          filter: brightness(0) invert(1);
+          user-select: none;
+          width: 14px;
+          height: 14px;
+        }
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.4);
+        }
+      }
+    }
+
+    .ClassItems {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-items: center;
+      align-content: flex-start;
+
+      .ClassItem {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        padding: 5px 12px;
+        border-radius: 3px;
+        background-color: rgba(0, 0, 0, 0.2);
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        user-select: none;
+        text-decoration: none;
+        color: white;
+
+        .ClassColor {
+          width: 10px;
+          height: 10px;
+          border-radius: 2px;
+          margin-right: 8px;
+        }
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        &.active {
+          background-color: $secondaryColor; // fallback if new css variables are not supported by browser
+          background-color: var(--leading-color);
+        }
+      }
+
+      .ImageButton {
+        margin: 0 0 10px 0;
+        border-radius: 3px;
+        background-color: rgba(0, 0, 0, 0.2);
+
+        img {
+          filter: brightness(0) invert(1);
+          user-select: none;
+          width: 16px;
+          height: 16px;
+        }
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.4);
+        }
+      }
+    }
+  }
+}

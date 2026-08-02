@@ -29,4 +29,9 @@ export class RenderEngineSettings {
     public static readonly DEFAULT_LINE_COLOR: string = '#000000';
     public static readonly ACTIVE_LINE_COLOR: string = Settings.PRIMARY_COLOR;
     public static readonly INACTIVE_LINE_COLOR: string = '#000000';
+
+    public static readonly MASK_OVERLAY_ALPHA: number = 0.55;
+    public static readonly MASK_BRUSH_DEFAULT_RADIUS_PX: number = 15;
+    public static readonly MASK_BRUSH_MIN_RADIUS_PX: number = 2;
+    public static readonly MASK_BRUSH_MAX_RADIUS_PX: number = 75;
 }

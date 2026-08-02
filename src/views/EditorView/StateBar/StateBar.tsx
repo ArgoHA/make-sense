@@ -32,6 +32,10 @@ const StateBar: React.FC<IProps> = ({imagesData, activeLabelType}) => {
         return currentCount + (currentImage.labelNameIds.length !== 0 ? 1 : 0);
     }, 0);
 
+    const maskLabeledImages = imagesData.reduce((currentCount: number, currentImage: ImageData) => {
+        return currentCount + (!!currentImage.labelMask ? 1 : 0);
+    }, 0);
+
     const getProgress = () => {
         switch (activeLabelType) {
             case LabelType.POINT:
@@ -44,6 +48,8 @@ const StateBar: React.FC<IProps> = ({imagesData, activeLabelType}) => {
                 return (100 * lineLabeledImages) / imagesData.length;
             case LabelType.IMAGE_RECOGNITION:
                 return (100 * tagLabeledImages) / imagesData.length;
+            case LabelType.SEMANTIC_SEGMENTATION:
+                return (100 * maskLabeledImages) / imagesData.length;
             default:
                 return 0;
         }

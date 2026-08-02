@@ -9,6 +9,7 @@ import { PolygonLabelsExporter } from '../../../logic/export/polygon/PolygonLabe
 import { PopupActions } from '../../../logic/actions/PopupActions';
 import { LineLabelsExporter } from '../../../logic/export/LineLabelExport';
 import { TagLabelsExporter } from '../../../logic/export/TagLabelsExport';
+import { SemanticSegmentationExporter } from '../../../logic/export/semanticSegmentation/SemanticSegmentationExporter';
 import GenericLabelTypePopup from '../GenericLabelTypePopup/GenericLabelTypePopup';
 import { ExportFormatData } from '../../../data/ExportFormatData';
 import { AppState } from '../../../store';
@@ -38,6 +39,9 @@ const ExportLabelPopup: React.FC<IProps> = ({ activeLabelType }) => {
                 break;
             case LabelType.IMAGE_RECOGNITION:
                 TagLabelsExporter.export(exportFormatType);
+                break;
+            case LabelType.SEMANTIC_SEGMENTATION:
+                SemanticSegmentationExporter.export(exportFormatType);
                 break;
         }
         PopupActions.close();

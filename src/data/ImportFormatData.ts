@@ -31,5 +31,12 @@ export const ImportFormatData: ImportFormatDataMap = {
             label: 'Multiple files in YOLO polygon format along with labels names definition - labels.txt file.'
         }
     ],
-    [LabelType.IMAGE_RECOGNITION]: []
+    [LabelType.IMAGE_RECOGNITION]: [],
+    [LabelType.SEMANTIC_SEGMENTATION]: [
+        {
+            type: AnnotationFormatType.PNG_MASK,
+            label: 'Multiple single-channel PNG masks (D-FINE-seg format) - pixel value is class index, 255 is ' +
+                'ignore. Optionally include labels.txt with class names.'
+        }
+    ]
 }

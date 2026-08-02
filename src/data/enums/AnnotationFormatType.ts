@@ -6,4 +6,5 @@ export enum AnnotationFormatType {
     VOC = 'VOC',
     VGG = 'VGG',
     YOLO_POLYGON = 'YOLO_POLYGON',
+    PNG_MASK = 'PNG_MASK',
 }

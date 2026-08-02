@@ -1,4 +1,4 @@
-import {Annotation, LabelName, LabelPoint, LabelPolygon, LabelRect} from '../store/labels/types';
+import {Annotation, LabelMask, LabelName, LabelPoint, LabelPolygon, LabelRect} from '../store/labels/types';
 import { v4 as uuidv4 } from 'uuid';
 import {find} from 'lodash';
 import {IRect} from '../interfaces/IRect';
@@ -46,6 +46,14 @@ export class LabelUtil {
             isCreatedByAI: false,
             status: LabelStatus.ACCEPTED,
             suggestedLabel: null
+        }
+    }
+
+    public static createLabelMask(classIndices: number[] = []): LabelMask {
+        return {
+            id: uuidv4(),
+            isVisible: true,
+            classIndices
         }
     }
 
